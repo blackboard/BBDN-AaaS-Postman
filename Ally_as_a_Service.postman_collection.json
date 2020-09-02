@@ -145,7 +145,7 @@
 						"content"
 					]
 				},
-				"description": "Start the process by uploading the file you would like to get feedback for. This is a multipart POST request. The response will contain the statusUrl that you can poll to check whether the file has been processed. If the file was processed previously, a resourceUrl will be provided through which you can fetch the feedback information immediately.\n\nSupported content types\n* PDFs\n* Office documents (.docx and .doc)\n* Office presentations (.pptx and .ppt)\n* Images\n* HTML files\n\nEndpoint\n`POST /api/v2/clients/:clientId/content`\n\nParameters\n* **clientId** - Path parameter - Your Ally Client ID\n* **file** - Post parameter - The binary file data\n\n## Expected response\nThere are two potential outcomes:\n\n1. The file is new and will be processed asynchronously. The endpoint will return with a 202 Accepted response and the following response body:\n```\n    {\n        \"hash\": \"UkVBRE1FLm1k...\",\n        \"status\": \"pending\",\n        \"statusUrl\": \"/api/v2/clients/:clientId/content/UkVBRE1FLm1k.../status,\n        \"resourceUrl\": null\n    }\n```\n2. The file has been processed before. The endpoint will return a 303 See Other with a Location header to the feedback URL\n\ncURL\n```\ncurl \\\n  -H \"Authorization: Bearer myJwtToken\" \\\n  -F\"file=@test.pdf\" https://prod.ally.ac/api/v2/clients/:clientId/content\n```"
+				"description": "Start the process by uploading the file you would like to get feedback for. This is a multipart POST request. The response will contain the statusUrl that you can poll to check whether the file has been processed. If the file was processed previously, a resourceUrl will be provided through which you can fetch the feedback information immediately.\n\n## Supported content types\n* PDFs\n* Office documents (.docx and .doc)\n* Office presentations (.pptx and .ppt)\n* Images\n* HTML files\n\n## Endpoint\n`POST /api/v2/clients/:clientId/content`\n\n## Parameters\n* **clientId** - Path parameter - Your Ally Client ID\n* **file** - Post parameter - The binary file data\n\n## Expected response\nThere are two potential outcomes:\n\n1. The file is new and will be processed asynchronously. The endpoint will return with a 202 Accepted response and the following response body:\n```\n    {\n        \"hash\": \"UkVBRE1FLm1k...\",\n        \"status\": \"pending\",\n        \"statusUrl\": \"/api/v2/clients/:clientId/content/UkVBRE1FLm1k.../status,\n        \"resourceUrl\": null\n    }\n```\n2. The file has been processed before. The endpoint will return a 303 See Other with a Location header to the feedback URL\n\ncURL\n```\ncurl \\\n  -H \"Authorization: Bearer myJwtToken\" \\\n  -F\"file=@test.pdf\" https://prod.ally.ac/api/v2/clients/:clientId/content\n```"
 			},
 			"response": []
 		},
@@ -201,7 +201,7 @@
 				"url": {
 					"raw": ""
 				},
-				"description": "Ally processes files asynchronously. We aim to process files in near-realtime, but some delays might be present. This endpoint can be used to poll for status updates.\n\nEndpoint\n`GET /api/v2/clients/:clientId/content/:contentHash/status`\n\nParameters\n* **clientId** - Path parameter - Your Ally Client ID\n* **contentHash** - Path parameter - The content hash from the previous endpoint\n\n## Expected response\nThis endpoint will always return a 200 status code for existing content hashes regardless of whether the file was processed successfully.\n```\n{\n    \"hash\": \"MS4gQWxsI...\",\n    \"status\": \"success\",\n    \"statusUrl\": \"/api/v2/clients/7/content/MS4gQWxsIH.../status\",\n    \"resourceUrl\": \"/api/v2/clients/7/content/MS4gQWxsIH...\"\n}\n```\nThe following status values can be identified:\n\n* success\n* pending\n* inprogress\n* failed\n\ncURL\ncurl \\\n  -H \"Authorization: Bearer myJwtToken\" \\\n  https://prod.ally.ac/api/v2/clients/:clientId/content/:contentHash/status"
+				"description": "Ally processes files asynchronously. We aim to process files in near-realtime, but some delays might be present. This endpoint can be used to poll for status updates.\n\n## Endpoint\n`GET /api/v2/clients/:clientId/content/:contentHash/status`\n\n## Parameters\n* **clientId** - Path parameter - Your Ally Client ID\n* **contentHash** - Path parameter - The content hash from the previous endpoint\n\n## Expected response\nThis endpoint will always return a 200 status code for existing content hashes regardless of whether the file was processed successfully.\n```\n{\n    \"hash\": \"MS4gQWxsI...\",\n    \"status\": \"success\",\n    \"statusUrl\": \"/api/v2/clients/7/content/MS4gQWxsIH.../status\",\n    \"resourceUrl\": \"/api/v2/clients/7/content/MS4gQWxsIH...\"\n}\n```\nThe following status values can be identified:\n\n* success\n* pending\n* inprogress\n* failed\n\n## cURL\ncurl \\\n  -H \"Authorization: Bearer myJwtToken\" \\\n  https://prod.ally.ac/api/v2/clients/:clientId/content/:contentHash/status"
 			},
 			"response": []
 		},
@@ -286,27 +286,27 @@
 	],
 	"variable": [
 		{
-			"id": "85d0046d-3c71-40e9-a44f-c06c810d1a75",
+			"id": "35eea0c7-fdf3-407e-a110-8c9f49567f39",
 			"key": "ALLY_URL",
 			"value": "https://prod.ally.ac"
 		},
 		{
-			"id": "113e40fe-c223-4f2b-a458-4e3d2dc9af28",
+			"id": "762dd06f-92d6-4b05-8483-549cbe39dc77",
 			"key": "JWT_typ",
 			"value": "JWT"
 		},
 		{
-			"id": "644a596d-91f9-4dba-ba98-c807a078cfc9",
+			"id": "c4a610ca-a5b3-40a8-8f9d-8e4bcd22a1b5",
 			"key": "JWT_alg",
 			"value": "HS256"
 		},
 		{
-			"id": "0229bc9e-b4ae-4e62-abab-1342c1580b2a",
+			"id": "da04dc65-77c5-4c71-bc46-6138c28cd202",
 			"key": "JWT_secret",
 			"value": ""
 		},
 		{
-			"id": "ab568773-409f-45d7-a2ac-c825e6be47fc",
+			"id": "1a6e705a-577d-4d4f-9b19-c5c4e276d5e7",
 			"key": "ALLY_CLIENT_ID",
 			"value": ""
 		}
