@@ -49,7 +49,7 @@
 						"id": "3b7dbd7d-7db6-46c9-ab7e-8a483a6e20c0",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"if(response.status === 303) {",
+							"if(responseCode === 303) {",
 							"    postman.setEnvironmentVariable(\"contentHash\", postman.response.Location.substring(str.lastIndexOf('/') + 1));",
 							"}",
 							"else {",
@@ -128,7 +128,7 @@
 							"contentType": "multipart/form-data",
 							"description": "File to process",
 							"type": "file",
-							"src": "/Users/shurrey/Desktop/bbworld-workspace/VirtualDevConCEOLT-20200427.pptx"
+							"src": []
 						}
 					]
 				},
@@ -197,9 +197,27 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": ""
+					"raw": "{{ALLY_URL}}/api/v2/clients/{{ALLY_CLIENT_ID}}/content/{{contentHash}}/status",
+					"host": [
+						"{{ALLY_URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"clients",
+						"{{ALLY_CLIENT_ID}}",
+						"content",
+						"{{contentHash}}",
+						"status"
+					]
 				},
 				"description": "Ally processes files asynchronously. We aim to process files in near-realtime, but some delays might be present. This endpoint can be used to poll for status updates.\n\n## Endpoint\n`GET /api/v2/clients/:clientId/content/:contentHash/status`\n\n## Parameters\n* **clientId** - Path parameter - Your Ally Client ID\n* **contentHash** - Path parameter - The content hash from the previous endpoint\n\n## Expected response\nThis endpoint will always return a 200 status code for existing content hashes regardless of whether the file was processed successfully.\n```\n{\n    \"hash\": \"MS4gQWxsI...\",\n    \"status\": \"success\",\n    \"statusUrl\": \"/api/v2/clients/7/content/MS4gQWxsIH.../status\",\n    \"resourceUrl\": \"/api/v2/clients/7/content/MS4gQWxsIH...\"\n}\n```\nThe following status values can be identified:\n\n* success\n* pending\n* inprogress\n* failed\n\n## cURL\ncurl \\\n  -H \"Authorization: Bearer myJwtToken\" \\\n  https://prod.ally.ac/api/v2/clients/:clientId/content/:contentHash/status"
 			},
@@ -253,9 +271,32 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": ""
+					"raw": "{{ALLY_URL}}/api/v2/clients/{{ALLY_CLIENT_ID}}/content/{{contentHash}}?feedback=true",
+					"host": [
+						"{{ALLY_URL}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"clients",
+						"{{ALLY_CLIENT_ID}}",
+						"content",
+						"{{contentHash}}"
+					],
+					"query": [
+						{
+							"key": "feedback",
+							"value": "true"
+						}
+					]
 				},
 				"description": "Once the file is processed, the feedback can be retrieved\n\n## Endpoint\n`GET /api/v2/clients/:clientId/content/:contentHash`\n\n## Parameters\n* **clientId** - Path parameter - Your Ally Client ID\n* **contentHash** - Path parameter - The content hash from the previous endpoint\n* **feedback** - Query parameter - Whether feedback information should be returned. Should be true (full report), false or ommitted (metadata only).\n\n## Expected response\n```\n    {\n        \"hash\": \"Mi4gSGVhZGluZ3NfdGFnZ2VkX2luY29ycmVjdGx5LnBkZjo4NkE3NEJGOTUxRDA2NEM4Qzk1ODUyMDI0NEQ0REJBNkM4RDdGRjJCOmFwcGxpY2F0aW9uL3BkZg==\",\n        \"feedback\": {\n          \"score\": 0.4292113158749556,\n          \"visibility\": \"medium\",\n          \"report\": {\n            \"results\": {\n              \"Scanned\": {\n                \"score\": 1\n              },\n              \"Tagged\": {\n                \"score\": 1\n              },\n              \"AlternativeText\": {\n                \"snippets\": [\n                  {\n                    \"page\": 3,\n                    \"y0\": 397.45,\n                    \"x0\": 72,\n                    \"y1\": 720,\n                    \"x1\": 526\n                  },\n                  {\n                    \"page\": 4,\n                    \"y0\": 394.81,\n                    \"x0\": 72,\n                    \"y1\": 720,\n                    \"x1\": 476.8\n                  },\n                  ....\n                ],\n                \"score\": 0\n              },\n              \"Contrast\": {\n                \"snippets\": [\n                  {\n                    \"page\": 0,\n                    \"y0\": 588.6369,\n                    \"x0\": 63.583138,\n                    \"y1\": 612.7333,\n                    \"x1\": 385.0053\n                  },\n                  {\n                    \"page\": 1,\n                    \"y0\": 688.4769,\n                    \"x0\": 63.583138,\n                    \"y1\": 712.5733,\n                    \"x1\": 473.90308\n                  },\n                  ...\n                ],\n                \"score\": 0.9442992157651318\n              },\n              \"HeadingsSequential\": {\n                \"snippets\": [\n                  {\n                    \"page\": 2,\n                    \"y0\": 583.18,\n                    \"x0\": 72.024,\n                    \"y1\": 620.98,\n                    \"x1\": 233.324\n                  }\n                ],\n                \"score\": 0.9230769230769231\n              },\n              \"HeadingsHigherLevel\": {\n                \"snippets\": [],\n                \"score\": 1\n              },\n              \"Title\": {\n                \"score\": 0\n              },\n              \"TableHeaders\": {\n                \"snippets\": [\n                  {\n                    \"page\": 1,\n                    \"y0\": 344.09,\n                    \"x0\": 77.664,\n                    \"y1\": 645.45996,\n                    \"x1\": 517.17\n                  }\n                ],\n                \"score\": 0\n              },\n              \"LanguagePresence\": {\n                \"score\": 1\n              },\n              \"HeadingsPresence\": {\n                \"score\": 1\n              },\n              \"LanguageCorrect\": {\n                \"detectedLanguage\": \"en\",\n                \"score\": 1\n              },\n              \"HeadingsStartAtOne\": {\n                \"snippets\": [\n                  {\n                    \"page\": 0,\n                    \"y0\": 586.06,\n                    \"x0\": 72.024,\n                    \"y1\": 620.26,\n                    \"x1\": 376.75403\n                  }\n                ],\n                \"score\": 0\n              },\n              \"LibraryReference\": {\n                \"score\": 0\n              }\n            },\n            \"suggestions\": {\n              \"HeadingsSequential\": 0.4306552764930626,\n              \"Title\": 0.4471530009744932,\n              \"TableHeaders\": 0.47092573373138025,\n              \"HeadingsStartAtOne\": 0.44798280391034667,\n              \"AlternativeText\": 0.6169261962288668,\n              \"Contrast\": 0.4515796153846155,\n              \"LibraryReference\": 1\n            }\n          }\n        },\n        \"formats\": null,\n        \"metadata\": {\n          \"name\": \"2. Headings_tagged_incorrectly.pdf\",\n          \"decorative\": null,\n          \"description\": null,\n          \"fileType\": \"pdf\",\n          \"mimeType\": \"application/pdf\",\n          \"isVersioned\": false,\n          \"isSeizureInducing\": false,\n          \"libraryReference\": null\n        }\n      }\n```\n\n## cURL\n```\ncurl \\\n  -H \"Authorization: Bearer myJwtToken\" \\\n  https://prod.ally.ac/api/v2/clients/:clientId/content/:contentHash\n```"
 			},
@@ -286,27 +327,27 @@
 	],
 	"variable": [
 		{
-			"id": "35eea0c7-fdf3-407e-a110-8c9f49567f39",
+			"id": "f299b078-c970-4236-9980-9c63f5520881",
 			"key": "ALLY_URL",
 			"value": "https://prod.ally.ac"
 		},
 		{
-			"id": "762dd06f-92d6-4b05-8483-549cbe39dc77",
+			"id": "9e63c94a-090d-4f61-9154-bb660eea7bcb",
 			"key": "JWT_typ",
 			"value": "JWT"
 		},
 		{
-			"id": "c4a610ca-a5b3-40a8-8f9d-8e4bcd22a1b5",
+			"id": "0ad0b234-a70c-4395-9d6c-1b703d33edaf",
 			"key": "JWT_alg",
 			"value": "HS256"
 		},
 		{
-			"id": "da04dc65-77c5-4c71-bc46-6138c28cd202",
+			"id": "11a5ec53-9fa0-4cee-9245-5c885530f83a",
 			"key": "JWT_secret",
 			"value": ""
 		},
 		{
-			"id": "1a6e705a-577d-4d4f-9b19-c5c4e276d5e7",
+			"id": "41a59a6e-6f6b-455d-8867-662fae4705fc",
 			"key": "ALLY_CLIENT_ID",
 			"value": ""
 		}
