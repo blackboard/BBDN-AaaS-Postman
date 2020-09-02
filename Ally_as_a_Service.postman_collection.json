@@ -286,27 +286,27 @@
 	],
 	"variable": [
 		{
-			"id": "556b69e2-8995-4d93-a118-072555f56418",
+			"id": "85d0046d-3c71-40e9-a44f-c06c810d1a75",
 			"key": "ALLY_URL",
 			"value": "https://prod.ally.ac"
 		},
 		{
-			"id": "114cd6a2-fba6-4a49-8527-34e40ec56c9a",
+			"id": "113e40fe-c223-4f2b-a458-4e3d2dc9af28",
 			"key": "JWT_typ",
 			"value": "JWT"
 		},
 		{
-			"id": "65ee9244-63a8-4131-8784-ae98f009f644",
+			"id": "644a596d-91f9-4dba-ba98-c807a078cfc9",
 			"key": "JWT_alg",
 			"value": "HS256"
 		},
 		{
-			"id": "8a7bfb8b-8ad1-42d7-b3ed-ca6743ce7438",
+			"id": "0229bc9e-b4ae-4e62-abab-1342c1580b2a",
 			"key": "JWT_secret",
 			"value": ""
 		},
 		{
-			"id": "723ae4b7-1da2-4f1a-9a3b-0f9a7184e89a",
+			"id": "ab568773-409f-45d7-a2ac-c825e6be47fc",
 			"key": "ALLY_CLIENT_ID",
 			"value": ""
 		}
